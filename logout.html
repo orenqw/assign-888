@@ -1,0 +1,91 @@
+<html>
+
+<head>
+<script>
+
+function logout_user(){
+ 
+
+ 
+ var params = new FormData();
+params.append('username', document.getElementById('username').value);
+ 
+ 
+
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status ==  200) {
+		/* okay */
+		
+		var resJsn = JSON.parse(this.responseText);
+		/* user is log out  */
+		document.location.href = "/online";
+    }
+	
+	if (this.readyState == 4 && Math.floor(this.status/100) == 4 ) {
+		/* okay */
+		var resJsn = JSON.parse(this.responseText);
+		alert ("Action failed! ( Error "+this.status+")\n" + resJsn.msg );
+    }
+	
+	
+	if (this.readyState == 4 && Math.floor(this.status/100) == 5 ) {
+		/* okay */
+		alert ("SERVER ERROR "+this.status+", try again later");
+    }
+	
+	if (this.readyState == 4 && Math.floor(this.status/100) == 3 ) {
+		/* redirected */
+    }
+	
+	
+  };
+  xhttp.open("POST", "/logout", true);
+  xhttp.send(params);
+
+	return false;
+}
+
+</script>
+<style>
+ul { display:block;}
+li { float:left; width:auto; list-style:none; color:#899898; padding:3px; background:#f0f0f0; margin:7px; }
+li a { color:#899898; }
+ul + * { clear:both;}
+</style>
+</head>
+
+<body>
+
+<ul>
+<li>MENU:</li>
+<li><a href="/online">ONLINE</a></li>
+<li><a href="/homepage">LOGIN</a></li>
+<li><a href="/logout">LOGOUT</a></li>
+
+
+</ul>
+
+
+<p>&nbsp;</p>
+<hr/>
+<p>&nbsp;</p>
+
+
+<form onsubmit='return logout_user()'>
+
+
+	<H1>Logout</h1>
+
+
+	<input type='text' id='username' name='username' placeholder='User name' />
+	<br/>
+	<br/>
+	 
+	<button id='button1' type='button' onclick='return logout_user()'>Submit</button>
+	</form>
+	<i>Username is case sensitive</i>
+	
+</body>
+	
+	</html>
